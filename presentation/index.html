@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>DataTables Events</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>DataTables Events</h1>
+				</section>
+				<section style="text-align: left;">
+					<section>
+						<h2>Events</h2>
+						<ul>
+							<li>DataTables <b>feuert</b> bei bestimmten Ereignissen spezielle <b>DOM Events</b></li>
+							<li>Auf diese Events können eigene <b>Event Handler registriert</b> werden</li>
+							<li>Mit Hilfe der Event Handler kann <b>auf Events reagiert</b> werden</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Event Listener mit on() registrieren (DataTables API)</h2>
+						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als Event Handler für das Event "draw" mittels DataTables API.</article>
+						<pre><code data-trim>
+var table = $('#example').DataTable();
+table.on('draw', function () {
+	alert('Tabelle neu gezeichnet');
+});
+						</code></pre>
+						<article>Wird das Event "draw" gefeuert, so löst dies den Aufruf der anonymen Callback-Funktion aus - der alert mit der Nachricht "Tabelle neu gezeichnet" wird angezeigt.</article>
+					</section>
+					<section>
+						<h2>Event Listener mit on() registrieren (jQuery API)</h2>
+						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als Event Handler für das Event "draw" mittels jQuery API.</article>
+						<pre><code data-trim>
+$('#example').on('draw.dt', function () {
+	alert('Tabelle neu gezeichnet');
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>Deregistrierung von Events und Event Listenern</h2>
+						<article>Die Deregistrierung von Events ist wichtig, damit der JavaScript Garbage Collector den für die Eventbehandlung allokierten Speicher wieder freigeben kann.</article>
+					</section>
+					<section>
+						<h2>Event Listener mit off() deregistrieren (DataTables API)</h2>
+						<article>Folgendes Beispiel zeigt die Deregistrierung aller für das Event "draw" zuvor registrierten Event Handler mittels DataTables API.</article>
+						<pre><code data-trim>
+var table = $('#example').DataTable();
+table.off('draw');
+						</code></pre>
+						<article>Folgendes Beispiel zeigt die Deregistrierung eines bestimmten für das Event "draw" zuvor registrierten Event Handlers mittels DataTables API.</article>
+						<pre><code data-trim>
+var table = $('#example').DataTable();
+table.off('draw', function () {
+	alert('Tabelle neu gezeichnet');
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>Event Listener mit off() deregistrieren (jQuery API)</h2>
+						<article>Folgendes Beispiel zeigt die Deregistrierung aller für das Event "draw" zuvor registrierten Event Handler mittels jQuery API.</article>
+						<pre><code data-trim>
+$('#example').off('draw.dt');
+						</code></pre>
+						<article>Folgendes Beispiel zeigt die Deregistrierung eines bestimmten für das Event "draw" zuvor registrierten Event Handlers mittels jQuery API.</article>
+						<pre><code data-trim>
+$('#example').off('draw.dt', function () {
+	alert('Tabelle neu gezeichnet');
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>Event Listener für einmalige Ausführung registrieren (DataTables API)</h2>
+						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als einmaliger Event Handler für das Event "draw" mittels DataTables API.</article>
+						<pre><code data-trim>
+var table = $('#example').DataTable();
+table.one('draw', function () {
+	alert('Tabelle neu gezeichnet');
+});
+						</code></pre>
+						<article>Sobald das Event einmal gefeuert und die Callback-Funktion aufgerufen wurde, wird der Event Handler automatisch deregistriert.</article>
+					</section>
+					<section>
+						<h2>Weiterführende Informationen</h2>
+						<ul>
+							<li><a href="https://datatables.net/reference/api/on()" target="_blank">API-Referenz zu on()</a></li>
+							<li><a href="https://datatables.net/reference/api/off()" target="_blank">API-Referenz zu off()</a></li>
+							<li><a href="https://datatables.net/reference/api/one()" target="_blank">API-Referenz zu one()</a></li>
+						</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+				slideNumber: true,
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
