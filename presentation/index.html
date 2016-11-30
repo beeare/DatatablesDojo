@@ -11,7 +11,7 @@
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
-
+		
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -25,19 +25,23 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>DataTables Events</h1>
+					<h1>DataTables - Advanced Features</h1>
 				</section>
 				<section style="text-align: left;">
+					<section style="text-align: center;">
+						<h2>Event Handling</h2>
+					</section>
 					<section>
-						<h2>Events</h2>
+						<h3>Grundlagen</h3>
 						<ul>
-							<li>DataTables <b>feuert</b> bei bestimmten Ereignissen spezielle <b>DOM Events</b></li>
-							<li>Auf diese Events können eigene <b>Event Handler registriert</b> werden</li>
-							<li>Mit Hilfe der Event Handler kann <b>auf Events reagiert</b> werden</li>
+							<li>DataTables <b>feuert bei bestimmten Ereignissen</b> (z. B. Sortieren, Filtern, Neuzeichnen der Tabelle) <b>eigene DOM Events</b></li>
+							<li>Für diese Events können beliebige <b>Funktionen als Event Handler registriert</b> werden</li>
+							<li>Mit Hilfe der Event Handler kann somit auf die <b>Events in geeigneter Form reagiert</b> werden</li>
+							<li>Zur Unterscheidung der Events von denen anderer Bibliotheken werden diese im <b>Namespace <code>dt</code></b> getriggert</li>
 						</ul>
 					</section>
 					<section>
-						<h2>Event Listener mit on() registrieren (DataTables API)</h2>
+						<h3>Event Listener mit on() registrieren (DataTables API)</h3>
 						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als Event Handler für das Event "draw" mittels DataTables API.</article>
 						<pre><code data-trim>
 var table = $('#example').DataTable();
@@ -48,7 +52,7 @@ table.on('draw', function () {
 						<article>Wird das Event "draw" gefeuert, so löst dies den Aufruf der anonymen Callback-Funktion aus - der alert mit der Nachricht "Tabelle neu gezeichnet" wird angezeigt.</article>
 					</section>
 					<section>
-						<h2>Event Listener mit on() registrieren (jQuery API)</h2>
+						<h3>Event Listener mit on() registrieren (jQuery API)</h3>
 						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als Event Handler für das Event "draw" mittels jQuery API.</article>
 						<pre><code data-trim>
 $('#example').on('draw.dt', function () {
@@ -57,11 +61,14 @@ $('#example').on('draw.dt', function () {
 						</code></pre>
 					</section>
 					<section>
-						<h2>Deregistrierung von Events und Event Listenern</h2>
-						<article>Die Deregistrierung von Events ist wichtig, damit der JavaScript Garbage Collector den für die Eventbehandlung allokierten Speicher wieder freigeben kann.</article>
+						<h3>Deregistrierung von Events und Event Listenern</h3>
+						<ul>
+							<li>Eine <b>explizite Deregistrierung</b> ist wichtig, damit der JavaScript <b>Garbage Collector</b> den für das Event Handling zuvor <b>allokierten Speicher wieder freigeben</b> kann</li>
+							<li>Eine Missachtung dieser Regel provoziert <b>Memory Leaks</b> und <b>Performanceprobleme</b></li>
+						</ul>
 					</section>
 					<section>
-						<h2>Event Listener mit off() deregistrieren (DataTables API)</h2>
+						<h3>Event Listener mit off() deregistrieren (DataTables API)</h3>
 						<article>Folgendes Beispiel zeigt die Deregistrierung aller für das Event "draw" zuvor registrierten Event Handler mittels DataTables API.</article>
 						<pre><code data-trim>
 var table = $('#example').DataTable();
@@ -76,7 +83,7 @@ table.off('draw', function () {
 						</code></pre>
 					</section>
 					<section>
-						<h2>Event Listener mit off() deregistrieren (jQuery API)</h2>
+						<h3>Event Listener mit off() deregistrieren (jQuery API)</h3>
 						<article>Folgendes Beispiel zeigt die Deregistrierung aller für das Event "draw" zuvor registrierten Event Handler mittels jQuery API.</article>
 						<pre><code data-trim>
 $('#example').off('draw.dt');
@@ -89,8 +96,8 @@ $('#example').off('draw.dt', function () {
 						</code></pre>
 					</section>
 					<section>
-						<h2>Event Listener für einmalige Ausführung registrieren (DataTables API)</h2>
-						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als einmaliger Event Handler für das Event "draw" mittels DataTables API.</article>
+						<h3>Event Listener für einmalige Ausführung mit one() registrieren (DataTables API)</h3>
+						<article>Folgendes Beispiel zeigt die Registrierung einer anonymen Callback-Funktion als lediglich einmal aufzurufenden Event Handler für das Event "draw" mittels DataTables API.</article>
 						<pre><code data-trim>
 var table = $('#example').DataTable();
 table.one('draw', function () {
@@ -100,12 +107,94 @@ table.one('draw', function () {
 						<article>Sobald das Event einmal gefeuert und die Callback-Funktion aufgerufen wurde, wird der Event Handler automatisch deregistriert.</article>
 					</section>
 					<section>
-						<h2>Weiterführende Informationen</h2>
+						<h3>Weiterführende Informationen</h3>
 						<ul>
+							<li><a href="https://datatables.net/manual/events" target="_blank">Handbuchabschnitt zu Events</a></li>
 							<li><a href="https://datatables.net/reference/api/on()" target="_blank">API-Referenz zu on()</a></li>
 							<li><a href="https://datatables.net/reference/api/off()" target="_blank">API-Referenz zu off()</a></li>
 							<li><a href="https://datatables.net/reference/api/one()" target="_blank">API-Referenz zu one()</a></li>
 						</ul>
+					</section>
+				</section>
+				<section style="text-align: left;">
+					<section style="text-align: center;">
+						<h2>Events</h2>
+					</section>
+					<section>
+						<h3>Initialisierung und Zerstörung</h3>
+						<ul>
+							<li><b>preInit</b>: wird <i>unmittelbar vor dem Laden</i> der Daten in die Tabelle gefeuert</li>
+							<li><b>init</b>: wird <i>direkt nach dem Laden</i> der Daten in die Tabelle gefeuert</li>
+							<li><b>destroy</b>: wird <i>bei Zerstörung</i> eines DataTable-Objekts gefeuert</li>
+						</ul>
+					</section>
+					<section>
+						<h3>preInit</h3>
+						<p>Zum Zeitpunkt der Auslösung des Events verfügt die Tabelle bereits über ihre Spalten und Funktionen, die Daten wurden jedoch noch nicht in die Tabelle geladen.</p>
+						<p>Folgendes Beispiel setzt die Anzahl der pro Seite anzuzeigenden Zeilen in der Tabelle auf 20:</p>
+						<pre><code data-trim>
+$(document).on('preInit.dt', function(e, settings) {
+	var api = new $.fn.dataTable.Api(settings);
+	api.page.len(20);
+});
+$('#example').DataTable();
+						</code></pre>
+						<p>Parameter:</p>
+						<ul>
+							<li>e: Event-Objekt von jQuery</li>
+							<li>settings: Settings-Objekt von DataTables</li>
+						</ul>
+					</section>
+					<section>
+						<h3>init</h3>
+						<p>Zum Zeitpunkt der Auslösung des Events verfügt die Tabelle über ihre Daten.</p>
+						<p>Folgendes Beispiel setzt die Anzahl der pro Seite anzuzeigenden Zeilen in der Tabelle auf 20:</p>
+						<pre><code data-trim>
+console.log('Table initialisation start');
+$('#example').on('init.dt', function() {
+	console.log('Table initialisation complete');
+}).DataTable();
+						</code></pre>
+						<p>Parameter:</p>
+						<ul>
+							<li>e: Event-Objekt von jQuery</li>
+							<li>settings: Settings-Objekt von DataTables</li>
+							<li>json: JSON-Objekt mit Tabellendaten, falls Daten per AJAX geladen wurden</li>
+						</ul>
+					</section>
+					<section>
+						<h3>destroy</h3>
+						<p>Zum Zeitpunkt der Auslösung des Events verfügt die Tabelle über ihre Daten.</p>
+						<p>Folgendes Beispiel setzt die Anzahl der pro Seite anzuzeigenden Zeilen in der Tabelle auf 20:</p>
+						<pre><code data-trim>
+console.log('Table initialisation start');
+$('#example').on('init.dt', function() {
+	console.log('Table initialisation complete');
+}).DataTable();
+						</code></pre>
+						<p>Parameter:</p>
+						<ul>
+							<li>e: Event-Objekt von jQuery</li>
+							<li>settings: Settings-Objekt von DataTables</li>
+							<li>json: JSON-Objekt mit Tabellendaten, falls Daten per AJAX geladen wurden</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Verarbeitung und Verarbeitungsfehler</h3>
+						<ul>
+							<li><b>processing</b></li>
+							<li><b>error</b></li>
+						</ul>
+					</section>
+					<section>
+						<h3>Weiterführende Informationen</h3>
+						<ul>
+							<li><a href="https://datatables.net/reference/event/" target="_blank">API-Referenz zu Events</a></li>
+							<li><a href="https://datatables.net/reference/event/preInit" target="_blank">API-Referenz zu preInit</a></li>
+							<li><a href="https://datatables.net/reference/event/init" target="_blank">API-Referenz zu init</a></li>
+							<li><a href="https://datatables.net/reference/event/destroy" target="_blank">API-Referenz zu destroy</a></li>
+						</ul>
+					</section>
 				</section>
 			</div>
 		</div>
